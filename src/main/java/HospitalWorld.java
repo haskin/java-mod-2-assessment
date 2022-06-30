@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 // The system must handle invalid input from the user (at all points where input is gathered from the user).
 
 public class HospitalWorld {
-    private static final int PATIENT_SIZE = 1;
+    private static final int PATIENT_SIZE = 3;
     private static final int DOCTOR_SIZE = 6;
     private static Map<Specialty, List<Patient>> specialtyToPatients = new HashMap<>();
 
