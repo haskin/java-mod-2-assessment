@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 // The system should create a Hospital with a name property provided by the user.
@@ -17,9 +20,73 @@ import java.util.Set;
 // The system must handle invalid input from the user (at all points where input is gathered from the user).
 
 public class HospitalWorld {
+    private static final int PATIENT_SIZE = 1;
+    private static Map<Specialty, Patient> specialtyToPatient = new HashMap<>();
+
     public static void main(String[] args) {
         // Specialty.getAbbreviation();
         System.out.println(createDoctors(50));
+
+        List<Patient> patients = new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("\n ---- Hospital System ----");
+                while (patients.size() < PATIENT_SIZE) {
+                    System.out.println(String.format("%n ---- Adding Patients ---- (Patients Left: %s)",
+                            PATIENT_SIZE - patients.size()));
+                    String patientName = getUserPatient(scanner);
+                    Patient patient = new Patient(patientName);
+                    patients.add(patient);
+                    specialtyToPatient.put(getUserSpecialty(scanner), patient);
+
+                }
+
+                return;
+
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    private static Specialty getUserSpecialty(Scanner scanner) {
+
+        try {
+            while (true) {
+                System.out.print(
+                        "\nPlease enter a Specialty abbreviation or I for specialty abbreviation information (Default chosen at random): ");
+                String specialtyAbbreviation = scanner.nextLine();
+                if (specialtyAbbreviation.equalsIgnoreCase("I")) {
+                    Specialty.printSpecialties();
+                    continue;
+                }
+                return Specialty.getSpecialtyFromAbbreviation(specialtyAbbreviation);
+            }
+
+        } catch (Exception e) {
+            Specialty specialty = Specialty.getRandomSpecialty();
+            System.out.println(String.format(
+                    "ERROR: This specialty abbreviation was invalid. The specialty \"%s\" will be used.", specialty));
+            return specialty;
+        }
+    }
+
+    private static String getUserPatient(Scanner scanner) {
+        System.out.print("\nPlease enter patient name (Default is random name): ");
+        String patientName = "";
+        try {
+            patientName = scanner.nextLine();
+            if (patientName.isBlank())
+                throw new Exception();
+
+        } catch (Exception e) {
+            patientName = getRandomName();
+            System.out.println(String.format("ERROR: This name is invalid. The name \"%s\" will be used", patientName));
+
+        }
+
+        return patientName;
     }
 
     private static List<Doctor> createDoctors(int doctorAmount) {
@@ -44,9 +111,22 @@ public class HospitalWorld {
             if (visitedIndex.contains(index))
                 continue;
             visitedIndex.add(index);
-            doctors.add(new Doctor(Specialty.getRandomSpecialty(random), fakeNames[index]));
+            doctors.add(new Doctor(Specialty.getRandomSpecialty(), fakeNames[index]));
         }
 
         return doctors;
+    }
+
+    /**
+     * Returns a random name
+     * 
+     * @return
+     */
+    private static String getRandomName() {
+        String[] fakeNames = { "Alfredo", "Lexi", "Kelsie", "Dakota", "Myron", "Ximena", "Luka", "Koda", "Clara",
+                "Harper", "Oskar", "Gianluca", "Kylie", "Carsyn", "Aubrey", "Gillian", "Denisse", "Lyla", "Romina",
+                "Audrey", "Gilberto", "Sailor", "Jad", "Aliyana", "Harlee" };
+        Random random = new Random();
+        return fakeNames[random.nextInt(fakeNames.length)];
     }
 }
