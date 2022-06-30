@@ -19,7 +19,7 @@ import java.util.Set;
 public class HospitalWorld {
     public static void main(String[] args) {
         // Specialty.getAbbreviation();
-        System.out.println(createDoctors(5));
+        System.out.println(createDoctors(50));
     }
 
     private static List<Doctor> createDoctors(int doctorAmount) {
@@ -29,10 +29,10 @@ public class HospitalWorld {
                 "Evan", "Jailyn", "Kalen", "Kensley", "Fabiola", "Bryson", "Savanna", "Tatiana", "Kya", "Sailor",
                 "Niko", "Kaden", "Kenlee", "Willis", "Shepherd", "Haddie" };
 
-        if (doctorAmount > fakeNames.length)
+        if (doctorAmount > fakeNames.length) // Upper bound edge case
             doctorAmount = fakeNames.length;
 
-        if (doctorAmount <= 0)
+        if (doctorAmount <= 0) // Lower bound edge case
             doctorAmount = 5;
 
         Set<Integer> visitedIndex = new HashSet<>();
