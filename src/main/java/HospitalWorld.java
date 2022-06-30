@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -6,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 // The system should create a Hospital with a name property provided by the user.
 // The system should create 3 doctors, each with a name and specialty provided by the user.
@@ -21,7 +23,12 @@ import java.util.Set;
 
 public class HospitalWorld {
     private static final int PATIENT_SIZE = 1;
-    private static Map<Specialty, Patient> specialtyToPatient = new HashMap<>();
+    private static final int DOCTOR_SIZE = 6;
+    private static Map<Specialty, List<Patient>> specialtyToPatients = new HashMap<>();
+
+    static {
+        Arrays.stream(Specialty.values()).forEach(specialty -> specialtyToPatients.put(specialty, new ArrayList<>()));
+    }
 
     public static void main(String[] args) {
         // Specialty.getAbbreviation();
@@ -31,19 +38,33 @@ public class HospitalWorld {
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                System.out.println("\n ---- Hospital System ----");
+                System.out.println("\n---- Hospital System ----");
+
+                System.out.println("\n---- Docters On Call ----");
+                List<Doctor> doctors = createDoctors(DOCTOR_SIZE);
+                Doctor.printDoctors(doctors);
+
                 while (patients.size() < PATIENT_SIZE) {
                     System.out.println(String.format("%n ---- Adding Patients ---- (Patients Left: %s)",
                             PATIENT_SIZE - patients.size()));
                     String patientName = getUserPatient(scanner);
                     Patient patient = new Patient(patientName);
+                    Specialty specialty = getUserSpecialty(scanner);
                     patients.add(patient);
-                    specialtyToPatient.put(getUserSpecialty(scanner), patient);
+                    specialtyToPatients.get(specialty).add(patient);
 
                 }
 
-                return;
+                System.out.println("\n---- Hospital World ----");
+                for (Specialty specialty : Specialty.values()) {
+                    List<Doctor> specialtyDoctors = doctors.stream()
+                            .filter(doctor -> specialty.equals(doctor.getSpecialty()))
+                            .collect(Collectors.toList());
+                    System.out.println(String.format("%s, Doctors: %s, Patients: %s", specialty, specialtyDoctors,
+                            specialtyToPatients.get(specialty)));
+                }
 
+                return;
             }
         } catch (Exception e) {
 
