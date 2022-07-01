@@ -46,23 +46,6 @@ public class UserInput {
         }
     }
 
-    public static String getUserPatient(Scanner scanner) {
-        System.out.print("\nPlease enter patient name (Default is random name): ");
-        String patientName = "";
-        try {
-            patientName = scanner.nextLine();
-            if (patientName.isBlank())
-                throw new Exception();
-
-        } catch (Exception e) {
-            patientName = RandomName.getRandomName();
-            System.out.println(String.format("ERROR: This name is invalid. The name \"%s\" will be used", patientName));
-
-        }
-
-        return patientName;
-    }
-
     /**
      * 
      * @param scanner
