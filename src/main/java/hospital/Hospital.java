@@ -1,9 +1,7 @@
 package hospital;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -14,7 +12,6 @@ import util.Specialty;
 public class Hospital {
     private List<Patient> patients = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
-    private Map<Specialty, Doctor> specialtyToDoctor = new HashMap<>();
 
     public Hospital(String name) {
         this.name = name;
@@ -28,7 +25,6 @@ public class Hospital {
 
     public void addDoctor(Doctor doctor) {
         doctors.add(doctor);
-        specialtyToDoctor.put(doctor.getSpecialty(), doctor);
     }
 
     public void addPatient(Patient patient) {
