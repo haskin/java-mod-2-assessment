@@ -33,7 +33,7 @@ public class HospitalWorld {
 
                 while (hospital.getDoctorsSize() < DOCTOR_SIZE) {
                     System.out.println(String.format("%n ---- Adding Doctor(s) ---- (Doctors Left: %s)",
-                            PATIENT_SIZE - hospital.getDoctorsSize()));
+                            DOCTOR_SIZE - hospital.getDoctorsSize()));
                     String doctorName = UserInput.getName(scanner, "doctor");
                     Specialty specialty = UserInput.getUserSpecialty(scanner);
                     hospital.addDoctor(new Doctor(specialty, doctorName));
