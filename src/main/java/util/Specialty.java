@@ -1,3 +1,5 @@
+package util;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +16,10 @@ public enum Specialty {
 
     Specialty(String abbreviation) {
         this.abbreviation = abbreviation;
-        StaticFields.abbreviationToSpecialty.put(abbreviation, this);
+        Conversion.abbreviationToSpecialty.put(abbreviation, this);
     }
 
-    private static final class StaticFields {
+    private static final class Conversion {
         protected static final Map<String, Specialty> abbreviationToSpecialty = new HashMap<>();
     }
 
@@ -29,9 +31,9 @@ public enum Specialty {
 
     public static Specialty getSpecialtyFromAbbreviation(String abbreviation) throws Exception {
         abbreviation = abbreviation.trim().toUpperCase();
-        if (!StaticFields.abbreviationToSpecialty.containsKey(abbreviation))
+        if (!Conversion.abbreviationToSpecialty.containsKey(abbreviation))
             throw new Exception();
-        return StaticFields.abbreviationToSpecialty.get(abbreviation);
+        return Conversion.abbreviationToSpecialty.get(abbreviation);
     }
 
     public static Specialty getRandomSpecialty() {
