@@ -8,4 +8,13 @@ public class DoctorPatient {
         this.doctor = doctor;
         this.patient = patient;
     }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
 }

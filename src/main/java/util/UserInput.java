@@ -3,7 +3,8 @@ package util;
 import java.util.Scanner;
 import java.util.UUID;
 
-import hospital.Hospital;
+import model.Hospital;
+import scheduler.RoundRobin;
 
 public class UserInput {
 
@@ -22,7 +23,7 @@ public class UserInput {
 
         }
 
-        return new Hospital(hospitalName);
+        return new Hospital(hospitalName, new RoundRobin());
     }
 
     public static Specialty getUserSpecialty(Scanner scanner) {

@@ -1,19 +1,29 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import scheduler.DoctorScheduler;
 import util.Specialty;
 
 public class Hospital {
     private List<Patient> patients = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
     private List<DoctorPatient> doctorPatients = new ArrayList<>();
+    private Map<Specialty, List<Doctor>> departments = new HashMap<>();
+    private DoctorScheduler scheduler;
 
-    public Hospital(String name) {
+    public Hospital(String name, DoctorScheduler scheduler) {
         this.name = name;
+        this.scheduler = scheduler;
+        for (Specialty specialty : Specialty.values()) {
+            departments.put(specialty, new LinkedList<>());
+        }
     }
 
     private String name;
@@ -22,14 +32,24 @@ public class Hospital {
         return doctors;
     }
 
-    public void addDoctor(Doctor doctor) {
-        doctors.add(doctor);
+    public List<DoctorPatient> getDoctorPatients() {
+        return doctorPatients;
     }
 
-    public void addPatient(Patient patient) {
+    public void addDoctor(Doctor doctor) {
+        doctors.add(doctor);
+        departments.get(doctor.getSpecialty()).add(doctor);
+    }
+
+    public void addPatient(Patient patient, Specialty specialty) {
         patients.add(patient);
-        // Doctor doctor -= 
-        doctorPatients.add(new DoctorPatient(doctor, patient))
+        try {
+            doctorPatients.add(new DoctorPatient(departments.get(specialty).get(0), patient));
+        } catch (IndexOutOfBoundsException | NullPointerException e) { // No doctors in the department
+            doctorPatients.add(new DoctorPatient(null, patient));
+        }
+        List<Doctor> department = departments.get(specialty);
+        departments.put(specialty, scheduler.schedule(department).orElse(null));
     }
 
     public int getDoctorsSize() {

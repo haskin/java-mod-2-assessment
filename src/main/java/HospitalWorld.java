@@ -45,14 +45,19 @@ public class HospitalWorld {
                     String patientName = UserInput.getName(scanner, "patient");
                     Specialty specialty = UserInput.getUserSpecialty(scanner);
                     hospital.addPatient(
-                            new Patient(patientName));
+                            new Patient(patientName), specialty);
                 }
 
                 System.out.println(String.format("%n---- Hospital %s World ----",
                         hospital.getName()));
-                hospital.getPatients().stream()
-                        .forEach(patient -> System.out.println(
-                                String.format("Patient: %s, Doctor: %s", patient.getName(), patient.getDoctor())));
+                hospital.getDoctorPatients().stream()
+                        .forEach(doctorPatient -> System.out
+                                .println(String.format("Patient: %s, Doctor: %s", doctorPatient.getPatient(),
+                                        doctorPatient.getDoctor())));
+                // hospital.getPatients().stream()
+                // .forEach(patient -> System.out.println(
+                // String.format("Patient: %s, Doctor: %s", patient.getName(),
+                // patient.getDoctor())));
 
                 System.out.print("\nWould you like to create another Hospital World? (Y/n): ");
                 if (scanner.nextLine().equalsIgnoreCase("n"))
