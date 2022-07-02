@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-import doctor.Doctor;
-import hospital.Hospital;
-import patient.Patient;
+import model.Doctor;
+import model.Hospital;
+import model.Patient;
 import util.Specialty;
 import util.UserInput;
 
@@ -45,7 +45,7 @@ public class HospitalWorld {
                     String patientName = UserInput.getName(scanner, "patient");
                     Specialty specialty = UserInput.getUserSpecialty(scanner);
                     hospital.addPatient(
-                            new Patient(patientName, hospital.getDoctorForSpecialty(specialty).orElse(null)));
+                            new Patient(patientName));
                 }
 
                 System.out.println(String.format("%n---- Hospital %s World ----",

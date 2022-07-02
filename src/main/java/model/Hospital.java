@@ -1,17 +1,16 @@
-package hospital;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import doctor.Doctor;
-import patient.Patient;
 import util.Specialty;
 
 public class Hospital {
     private List<Patient> patients = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
+    private List<DoctorPatient> doctorPatients = new ArrayList<>();
 
     public Hospital(String name) {
         this.name = name;
@@ -29,6 +28,8 @@ public class Hospital {
 
     public void addPatient(Patient patient) {
         patients.add(patient);
+        // Doctor doctor -= 
+        doctorPatients.add(new DoctorPatient(doctor, patient))
     }
 
     public int getDoctorsSize() {
