@@ -1,4 +1,4 @@
-package doctor;
+package models;
 
 import util.Specialty;
 
